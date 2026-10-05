@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Click Under Pressure – A fast-paced psychological browser game that tests memory, logic, reaction, and restraint across 30 escalating levels." />
+  <title>Click Under Pressure</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- START SCREEN -->
+  <div id="screen-start" class="screen active">
+    <div class="scanlines"></div>
+    <div class="start-content">
+      <div class="title-block">
+        <div class="title-eyebrow">CLASSIFIED EXPERIMENT #7</div>
+        <h1 class="main-title">CLICK<br/>UNDER<br/>PRESSURE</h1>
+        <div class="title-underline"></div>
+      </div>
+      <p class="start-desc">A psychological pressure test.<br/>30 levels. Changing rules. No second chances.</p>
+      <button id="btn-start" class="primary-btn" aria-label="Start the game">START</button>
+      <div class="footer-hint">[ FULL FOCUS REQUIRED ]</div>
+    </div>
+    <div class="corner-deco top-left">&#x25E4;</div>
+    <div class="corner-deco top-right">&#x25E5;</div>
+    <div class="corner-deco bot-left">&#x25E3;</div>
+    <div class="corner-deco bot-right">&#x25E2;</div>
+  </div>
+
+  <!-- INTRO SCREEN -->
+  <div id="screen-intro" class="screen">
+    <div class="scanlines"></div>
+    <div class="intro-content">
+      <h2 class="intro-title">BRIEFING</h2>
+      <div class="intro-lines" id="intro-lines-container">
+        <div class="intro-line" data-delay="0">Instructions may change between levels.</div>
+        <div class="intro-line" data-delay="400">Information shown earlier may become important later.</div>
+        <div class="intro-line" data-delay="800">Some buttons must be pressed. Others must NOT.</div>
+        <div class="intro-line" data-delay="1200">Sometimes the correct action is to wait &mdash; or do nothing.</div>
+        <div class="intro-line" data-delay="1600">Think before you react. Speed alone is not enough.</div>
+        <div class="intro-line highlight" data-delay="2100">One wrong action or timeout means GAME OVER.</div>
+      </div>
+      <button id="btn-intro-ready" class="primary-btn ready-hidden" aria-label="Begin the test">I UNDERSTAND. BEGIN.</button>
+    </div>
+  </div>
+
+  <!-- GAME SCREEN -->
+  <div id="screen-game" class="screen">
+    <div class="scanlines"></div>
+    <div class="hud" id="hud">
+      <div class="hud-item">
+        <span class="hud-label">LEVEL</span>
+        <span class="hud-value" id="level-display">1</span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">SCORE</span>
+        <span class="hud-value" id="score-display">0</span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">STREAK</span>
+        <span class="hud-value" id="streak-display">0</span>
+      </div>
+    </div>
+    <div class="timer-bar-container" id="timer-container">
+      <div class="timer-bar" id="timer-bar"></div>
+      <div class="timer-text" id="timer-text">5.0</div>
+    </div>
+    <div class="challenge-area" id="challenge-area">
+      <div class="instruction-block" id="instruction-block">
+        <div class="instruction-label" id="instruction-label">INSTRUCTION</div>
+        <div class="instruction-text" id="instruction-text"></div>
+        <div class="instruction-sub" id="instruction-sub"></div>
+      </div>
+      <div class="buttons-area" id="buttons-area"></div>
+      <div class="info-display" id="info-display"></div>
+    </div>
+    <div class="rule-banner" id="rule-banner">
+      <span class="rule-icon">&#x26A0;</span>
+      <span id="rule-text">ACTIVE RULE: RED MEANS YES</span>
+    </div>
+  </div>
+
+  <!-- LEVEL TRANSITION -->
+  <div id="screen-transition" class="screen">
+    <div class="transition-content">
+      <div class="transition-level" id="transition-level">LEVEL 2</div>
+      <div class="transition-bar-wrap"><div class="transition-bar" id="transition-bar"></div></div>
+    </div>
+  </div>
+
+  <!-- GAME OVER SCREEN -->
+  <div id="screen-gameover" class="screen">
+    <div class="scanlines"></div>
+    <div class="gameover-content">
+      <div class="go-header">SYSTEM FAILURE</div>
+      <h2 class="go-title">GAME OVER</h2>
+      <div class="go-reason" id="go-reason">You clicked the wrong button.</div>
+      <div class="go-stats">
+        <div class="go-stat">
+          <span class="go-stat-label">LEVEL REACHED</span>
+          <span class="go-stat-value" id="go-level">1</span>
+        </div>
+        <div class="go-stat">
+          <span class="go-stat-label">SCORE</span>
+          <span class="go-stat-value" id="go-score">0</span>
+        </div>
+        <div class="go-stat">
+          <span class="go-stat-label">BEST STREAK</span>
+          <span class="go-stat-value" id="go-streak">0</span>
+        </div>
+      </div>
+      <div class="go-actions">
+        <button id="btn-retry" class="primary-btn" aria-label="Retry">RETRY</button>
+        <button id="btn-menu-go" class="secondary-btn" aria-label="Main menu">MAIN MENU</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- VICTORY SCREEN -->
+  <div id="screen-victory" class="screen">
+    <div class="scanlines"></div>
+    <div class="victory-particles" id="victory-particles"></div>
+    <div class="victory-content">
+      <div class="victory-eyebrow">EXPERIMENT COMPLETE</div>
+      <h2 class="victory-title">TEST<br/>PASSED</h2>
+      <div class="victory-stats">
+        <div class="v-stat">
+          <span class="v-stat-label">FINAL SCORE</span>
+          <span class="v-stat-value" id="v-score">0</span>
+        </div>
+        <div class="v-stat">
+          <span class="v-stat-label">BEST STREAK</span>
+          <span class="v-stat-value" id="v-streak">0</span>
+        </div>
+        <div class="v-stat">
+          <span class="v-stat-label">CHALLENGES CLEARED</span>
+          <span class="v-stat-value" id="v-challenges">30</span>
+        </div>
+      </div>
+      <div class="victory-actions">
+        <button id="btn-play-again" class="primary-btn" aria-label="Play again">PLAY AGAIN</button>
+        <button id="btn-menu-victory" class="secondary-btn" aria-label="Main menu">MAIN MENU</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
